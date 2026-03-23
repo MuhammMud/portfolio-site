@@ -1,0 +1,389 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PROFESSIONAL, PERSONAL, WORK, PROJECTS, SOCIAL } from '../data/site.js';
+import { fetchSubstackPosts } from '../data/substack.js';
+
+const posts = await fetchSubstackPosts();
+---
+
+<BaseLayout>
+  <div class="root pro" id="root">
+    <div class="wrap">
+      <!-- NAV -->
+      <nav class="nav">
+        <a href="/" class="nav-home">Home</a>
+        <div class="toggle-wrap">
+          <svg viewBox="0 0 20 20" width="18" height="18" class="ornament"><circle cx="10" cy="10" r="4" fill="none" stroke-width="1" /><circle cx="10" cy="10" r="1.5" /><line x1="4" y1="10" x2="2" y2="10" stroke-width="0.9"/><line x1="16" y1="10" x2="18" y2="10" stroke-width="0.9"/><line x1="10" y1="4" x2="10" y2="2" stroke-width="0.9"/><line x1="10" y1="16" x2="10" y2="18" stroke-width="0.9"/><line x1="5.8" y1="5.8" x2="4.3" y2="4.3" stroke-width="0.9"/><line x1="14.2" y1="5.8" x2="15.7" y2="4.3" stroke-width="0.9"/><line x1="5.8" y1="14.2" x2="4.3" y2="15.7" stroke-width="0.9"/><line x1="14.2" y1="14.2" x2="15.7" y2="15.7" stroke-width="0.9"/></svg>
+          <div class="toggle">
+            <button class="active" data-mode="professional" onclick="switchMode('professional')">&#x2699; Professional</button>
+            <button data-mode="personal" onclick="switchMode('personal')">&#x2726; Personal</button>
+          </div>
+          <svg viewBox="0 0 20 20" width="18" height="18" class="ornament"><circle cx="10" cy="10" r="4" fill="none" stroke-width="1" /><circle cx="10" cy="10" r="1.5" /><line x1="4" y1="10" x2="2" y2="10" stroke-width="0.9"/><line x1="16" y1="10" x2="18" y2="10" stroke-width="0.9"/><line x1="10" y1="4" x2="10" y2="2" stroke-width="0.9"/><line x1="10" y1="16" x2="10" y2="18" stroke-width="0.9"/><line x1="5.8" y1="5.8" x2="4.3" y2="4.3" stroke-width="0.9"/><line x1="14.2" y1="5.8" x2="15.7" y2="4.3" stroke-width="0.9"/><line x1="5.8" y1="14.2" x2="4.3" y2="15.7" stroke-width="0.9"/><line x1="14.2" y1="14.2" x2="15.7" y2="15.7" stroke-width="0.9"/></svg>
+        </div>
+      </nav>
+
+      <div class="content in" id="content">
+        <!-- PROFILE -->
+        <section class="profile">
+          <div class="avatar-wrap">
+            <svg class="avatar-ring" viewBox="0 0 160 160" id="avatar-ring">
+              <circle cx="80" cy="80" r="78" fill="none" stroke-width="1.8" />
+            </svg>
+            <div class="avatar-inner">
+              <!-- Replace /images/me.jpg with your photo -->
+              <img src="/images/me.jpg" alt="Professional photo" class="avatar-img visible" id="avatar-pro" />
+              <img src="/images/me.jpg" alt="Personal photo" class="avatar-img hidden" id="avatar-pers" />
+            </div>
+          </div>
+          <h1 class="profile-name" id="profile-name">{PROFESSIONAL.name}</h1>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="divider" id="divider-1"></div>
+
+        <!-- PROFESSIONAL CONTENT -->
+        <div id="pro-content">
+          <div class="section si" style="animation-delay: 0.08s">
+            <div class="section-label">About</div>
+            <div><p class="about-text" set:html={PROFESSIONAL.about} /></div>
+          </div>
+
+          <div class="divider" id="divider-2"></div>
+
+          <div class="section si" style="animation-delay: 0.2s">
+            <div class="section-label">Work</div>
+            <div>
+              <div class="work-grid">
+                {WORK.map((w, i) => (
+                  <div class="work-card" data-work-index={i}>
+                    <div class="gfx-wrap">
+                      {w.graphic === 'finance' && (
+                        <svg viewBox="0 0 400 200">
+                          <defs><linearGradient id="fgr" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1e3a5f"/><stop offset="100%" stop-color="#0d2137"/></linearGradient></defs>
+                          <rect width="400" height="200" fill="url(#fgr)"/>
+                          <rect x="20" y="20" width="360" height="160" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                          <rect x="50" y="115" width="28" height="65" rx="4" fill="rgba(59,130,246,0.18)"/>
+                          <rect x="95" y="85" width="28" height="95" rx="4" fill="rgba(59,130,246,0.18)"/>
+                          <rect x="140" y="100" width="28" height="80" rx="4" fill="rgba(59,130,246,0.18)"/>
+                          <rect x="185" y="60" width="28" height="120" rx="4" fill="rgba(59,130,246,0.18)"/>
+                          <rect x="230" y="80" width="28" height="100" rx="4" fill="rgba(59,130,246,0.18)"/>
+                          <rect x="275" y="45" width="28" height="135" rx="4" fill="rgba(59,130,246,0.45)"/>
+                          <rect x="320" y="70" width="28" height="110" rx="4" fill="rgba(59,130,246,0.18)"/>
+                          <polyline points="64,115 109,85 154,100 199,60 244,80 289,45 334,55" fill="none" stroke="rgba(96,165,250,0.55)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <circle cx="64" cy="115" r="4" fill="#3b82f6" stroke="rgba(59,130,246,0.25)" stroke-width="6"/>
+                          <circle cx="109" cy="85" r="4" fill="#3b82f6" stroke="rgba(59,130,246,0.25)" stroke-width="6"/>
+                          <circle cx="154" cy="100" r="4" fill="#3b82f6" stroke="rgba(59,130,246,0.25)" stroke-width="6"/>
+                          <circle cx="199" cy="60" r="4" fill="#3b82f6" stroke="rgba(59,130,246,0.25)" stroke-width="6"/>
+                          <circle cx="244" cy="80" r="4" fill="#3b82f6" stroke="rgba(59,130,246,0.25)" stroke-width="6"/>
+                          <circle cx="289" cy="45" r="4" fill="#3b82f6" stroke="rgba(59,130,246,0.25)" stroke-width="6"/>
+                          <circle cx="334" cy="55" r="4" fill="#3b82f6" stroke="rgba(59,130,246,0.25)" stroke-width="6"/>
+                          <text x="40" y="45" fill="rgba(255,255,255,0.3)" font-size="11" font-family="monospace">FRAUD DETECTION</text>
+                          <text x="285" y="45" fill="rgba(96,165,250,0.55)" font-size="10" font-family="monospace">▲ 35%</text>
+                        </svg>
+                      )}
+                      {w.graphic === 'consulting' && (
+                        <svg viewBox="0 0 400 200">
+                          <defs><linearGradient id="cgr" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4c1d95"/><stop offset="100%" stop-color="#2e1065"/></linearGradient></defs>
+                          <rect width="400" height="200" fill="url(#cgr)"/>
+                          <circle cx="200" cy="100" r="52" fill="none" stroke="rgba(167,139,250,0.18)" stroke-width="1.5" stroke-dasharray="4 3"/>
+                          <circle cx="200" cy="100" r="22" fill="rgba(167,139,250,0.14)" stroke="rgba(167,139,250,0.28)" stroke-width="1.5"/>
+                          <text x="200" y="105" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="10" font-family="monospace">PM</text>
+                          <line x1="222" y1="100" x2="252" y2="100" stroke="rgba(167,139,250,0.12)" stroke-width="1"/><circle cx="252" cy="100" r="7" fill="rgba(129,140,248,0.55)"/><text x="277" y="103" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7.5" font-family="monospace">ENG</text>
+                          <line x1="211" y1="78" x2="226" y2="55" stroke="rgba(167,139,250,0.12)" stroke-width="1"/><circle cx="226" cy="55" r="7" fill="rgba(192,132,252,0.55)"/><text x="251" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7.5" font-family="monospace">UX</text>
+                          <line x1="189" y1="78" x2="174" y2="55" stroke="rgba(167,139,250,0.12)" stroke-width="1"/><circle cx="174" cy="55" r="7" fill="rgba(99,200,170,0.55)"/><text x="149" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7.5" font-family="monospace">FIN</text>
+                          <line x1="178" y1="100" x2="148" y2="100" stroke="rgba(167,139,250,0.12)" stroke-width="1"/><circle cx="148" cy="100" r="7" fill="rgba(251,191,36,0.45)"/><text x="123" y="103" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7.5" font-family="monospace">MKT</text>
+                          <line x1="189" y1="122" x2="174" y2="145" stroke="rgba(167,139,250,0.12)" stroke-width="1"/><circle cx="174" cy="145" r="7" fill="rgba(248,113,113,0.45)"/><text x="149" y="148" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7.5" font-family="monospace">LEGAL</text>
+                          <line x1="211" y1="122" x2="226" y2="145" stroke="rgba(167,139,250,0.12)" stroke-width="1"/><circle cx="226" cy="145" r="7" fill="rgba(96,165,250,0.55)"/><text x="251" y="148" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7.5" font-family="monospace">DATA</text>
+                        </svg>
+                      )}
+                      {w.graphic === 'ecommerce' && (
+                        <svg viewBox="0 0 400 200">
+                          <defs><linearGradient id="egr" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#064e3b"/><stop offset="100%" stop-color="#022c22"/></linearGradient></defs>
+                          <rect width="400" height="200" fill="url(#egr)"/>
+                          <path d="M100,35 L300,35 L260,80 L140,80 Z" fill="rgba(52,211,153,0.1)" stroke="rgba(52,211,153,0.28)" stroke-width="1"/>
+                          <path d="M140,85 L260,85 L240,125 L160,125 Z" fill="rgba(52,211,153,0.16)" stroke="rgba(52,211,153,0.32)" stroke-width="1"/>
+                          <path d="M160,130 L240,130 L225,165 L175,165 Z" fill="rgba(52,211,153,0.25)" stroke="rgba(52,211,153,0.42)" stroke-width="1"/>
+                          <text x="200" y="62" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10" font-family="monospace">VISITORS</text>
+                          <text x="200" y="110" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10" font-family="monospace">SIGNUPS</text>
+                          <text x="200" y="153" text-anchor="middle" fill="rgba(52,211,153,0.75)" font-size="10" font-family="monospace">ACTIVATED ✓</text>
+                        </svg>
+                      )}
+                      {w.graphic === 'community' && (
+                        <svg viewBox="0 0 400 200">
+                          <defs><linearGradient id="ogr" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#92400e"/><stop offset="100%" stop-color="#603006"/></linearGradient></defs>
+                          <rect width="400" height="200" fill="url(#ogr)"/>
+                          <path d="M40,170 Q80,168 120,160 T200,110 T280,55 T360,30" fill="none" stroke="rgba(251,191,36,0.45)" stroke-width="2.5" stroke-linecap="round"/>
+                          <path d="M40,170 Q80,168 120,160 T200,110 T280,55 T360,30 L360,170 L40,170 Z" fill="rgba(251,191,36,0.05)"/>
+                          <circle cx="80" cy="165" r="5" fill="rgba(251,191,36,0.65)"/><circle cx="80" cy="165" r="10" fill="rgba(251,191,36,0.08)"/>
+                          <circle cx="140" cy="150" r="5" fill="rgba(251,191,36,0.65)"/><circle cx="140" cy="150" r="10" fill="rgba(251,191,36,0.08)"/>
+                          <circle cx="200" cy="110" r="5" fill="rgba(251,191,36,0.65)"/><circle cx="200" cy="110" r="10" fill="rgba(251,191,36,0.08)"/>
+                          <circle cx="260" cy="70" r="5" fill="rgba(251,191,36,0.65)"/><circle cx="260" cy="70" r="10" fill="rgba(251,191,36,0.08)"/>
+                          <circle cx="320" cy="40" r="5" fill="rgba(251,191,36,0.65)"/><circle cx="320" cy="40" r="10" fill="rgba(251,191,36,0.08)"/>
+                          <text x="50" y="38" fill="rgba(255,255,255,0.3)" font-size="10" font-family="monospace">COMMUNITY GROWTH</text>
+                          <text x="290" y="170" fill="rgba(251,191,36,0.35)" font-size="9" font-family="monospace">40K+ members</text>
+                        </svg>
+                      )}
+                    </div>
+                    <div class="work-card-body">
+                      <div class="work-card-title">{w.title}</div>
+                      <div class="work-card-desc">{w.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div class="divider" id="divider-3"></div>
+
+          <div class="section si" style="animation-delay: 0.4s">
+            <div class="section-label">Side Projects</div>
+            <div>
+              <div class="proj-grid">
+                {PROJECTS.map((p) => (
+                  <a href={p.url} target={p.url !== '#' ? '_blank' : undefined} rel="noopener noreferrer" class="proj-card">
+                    <div class="proj-title">{p.title}</div>
+                    <div class="proj-desc">{p.desc}</div>
+                    <span class="proj-tag">{p.tag}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERSONAL CONTENT (hidden by default) -->
+        <div id="pers-content" style="display:none">
+          <div class="section si" style="animation-delay: 0.08s">
+            <div class="section-label">About</div>
+            <div><p class="about-text italic">{PERSONAL.about}</p></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section si" style="animation-delay: 0.2s">
+            <div class="section-label">Writing</div>
+            <div>
+              {posts.map((p, i) => (
+                <div class="post-row" data-post-index={i}>
+                  <div class="post-left">
+                    <span class="post-title">{p.title}</span>
+                    <span class="post-time">&middot; {p.readTime}</span>
+                  </div>
+                  <span class="post-date">{p.date}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section si" style="animation-delay: 0.5s">
+            <div class="section-label">Beyond Work</div>
+            <div><p class="about-text">{PERSONAL.beyondWork}</p></div>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer si" style="animation-delay: 0.65s">
+          <span>&copy; 2026 Muhammad Mudassir</span>
+          <div class="footer-links">
+            <a href={SOCIAL.substack} target="_blank" rel="noopener noreferrer">Substack</a>
+            <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href={`mailto:${SOCIAL.email}`}>Email</a>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- WORK MODAL -->
+    <div class="modal-overlay" id="work-modal" style="display:none" onclick="closeWorkModal(event)">
+      <div class="modal-backdrop"></div>
+      <div class="modal-card">
+        <button class="modal-close" onclick="document.getElementById('work-modal').style.display='none'">&times;</button>
+        <div class="modal-body" id="work-modal-body"></div>
+      </div>
+    </div>
+
+    <!-- POST MODAL -->
+    <div class="modal-overlay" id="post-modal" style="display:none" onclick="closePostModal(event)">
+      <div class="modal-backdrop"></div>
+      <div class="modal-card">
+        <button class="modal-close" onclick="document.getElementById('post-modal').style.display='none'">&times;</button>
+        <div class="modal-body" id="post-modal-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline data for JS -->
+  <script define:vars={{ WORK, posts }}>
+    window.__WORK = WORK;
+    window.__POSTS = posts;
+  </script>
+
+  <script>
+    const root = document.getElementById('root');
+    const proContent = document.getElementById('pro-content');
+    const persContent = document.getElementById('pers-content');
+    const profileName = document.getElementById('profile-name');
+    const avatarPro = document.getElementById('avatar-pro');
+    const avatarPers = document.getElementById('avatar-pers');
+    const avatarRing = document.getElementById('avatar-ring').querySelector('circle');
+    const content = document.getElementById('content');
+    const toggleBtns = document.querySelectorAll('.toggle button');
+    const ornaments = document.querySelectorAll('.ornament *');
+
+    let currentMode = 'professional';
+
+    // Check URL param
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'personal') {
+      switchMode('personal', true);
+    }
+
+    function switchMode(mode, instant = false) {
+      if (mode === currentMode && !instant) return;
+      currentMode = mode;
+      const isPro = mode === 'professional';
+
+      if (!instant) {
+        content.classList.remove('in');
+        content.classList.add('out');
+        setTimeout(() => applyMode(isPro), 360);
+      } else {
+        applyMode(isPro);
+      }
+
+      // Update URL
+      const url = new URL(window.location);
+      url.searchParams.set('mode', mode);
+      window.history.replaceState({}, '', url);
+    }
+
+    function applyMode(isPro) {
+      root.className = isPro ? 'root pro' : 'root pers';
+      proContent.style.display = isPro ? '' : 'none';
+      persContent.style.display = isPro ? 'none' : '';
+      profileName.textContent = isPro ? 'Muhammad Mudassir' : 'Shehryar';
+
+      avatarPro.className = isPro ? 'avatar-img visible' : 'avatar-img hidden';
+      avatarPers.className = isPro ? 'avatar-img hidden' : 'avatar-img visible';
+      avatarRing.setAttribute('stroke', isPro ? 'rgba(180,190,210,0.4)' : 'rgba(200,170,100,0.5)');
+
+      // Ornament colors
+      const ornColor = isPro ? 'rgba(200,180,130,0.7)' : 'rgba(160,130,80,0.6)';
+      ornaments.forEach(el => {
+        el.setAttribute('stroke', ornColor);
+        el.setAttribute('fill', el.tagName === 'line' ? 'none' : ornColor);
+        if (el.tagName === 'circle' && el.getAttribute('r') === '4') el.setAttribute('fill', 'none');
+      });
+
+      // Toggle active state
+      toggleBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === currentMode);
+      });
+
+      content.classList.remove('out');
+      content.classList.add('in');
+    }
+
+    // Make switchMode global
+    window.switchMode = switchMode;
+
+    // Work card click handlers
+    document.querySelectorAll('.work-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const idx = parseInt(card.dataset.workIndex);
+        const w = window.__WORK[idx];
+        const body = document.getElementById('work-modal-body');
+        body.innerHTML = `
+          <div class="modal-title">${w.title}</div>
+          <div class="modal-subtitle">${w.detail.role}</div>
+          <div class="modal-dates">${w.detail.dates}</div>
+          <p class="modal-intro">${w.detail.intro}</p>
+          <ul class="modal-bullets">
+            ${w.detail.bullets.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        `;
+        document.getElementById('work-modal').style.display = 'flex';
+      });
+    });
+
+    // Post click handlers
+    document.querySelectorAll('.post-row').forEach(row => {
+      row.addEventListener('click', () => {
+        const idx = parseInt(row.dataset.postIndex);
+        const p = window.__POSTS[idx];
+        const body = document.getElementById('post-modal-body');
+        body.innerHTML = `
+          <div class="modal-title" style="margin-bottom:8px">${p.title}</div>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px">
+            <span class="modal-cat">${p.category}</span>
+            <span class="modal-dates" style="margin:0">${p.readTime} &middot; ${p.date}</span>
+          </div>
+          <p class="modal-preview">${p.preview}</p>
+          <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="modal-cta">Continue reading on Substack &rarr;</a>
+        `;
+        document.getElementById('post-modal').style.display = 'flex';
+      });
+    });
+
+    // Close modals
+    function closeWorkModal(e) {
+      if (e.target === e.currentTarget) document.getElementById('work-modal').style.display = 'none';
+    }
+    function closePostModal(e) {
+      if (e.target === e.currentTarget) document.getElementById('post-modal').style.display = 'none';
+    }
+    window.closeWorkModal = closeWorkModal;
+    window.closePostModal = closePostModal;
+
+    // ESC to close modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('work-modal').style.display = 'none';
+        document.getElementById('post-modal').style.display = 'none';
+      }
+    });
+
+    // Divider rendering
+    document.querySelectorAll('.divider').forEach(div => {
+      div.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:14px;margin:38px 0';
+      div.innerHTML = `
+        <div style="flex:1;max-width:100px;height:1px" class="divider-line"></div>
+        <svg viewBox="0 0 36 16" width="36" height="16" class="divider-icon">
+          <path d="M8 8a6 6 0 0 1 10-4.5A6 6 0 0 1 18 14.5 6 6 0 0 1 8 8z" fill="none" stroke-width="1.2" />
+          <path d="M28 8a6 6 0 0 0-10-4.5A6 6 0 0 0 18 14.5 6 6 0 0 0 28 8z" fill="none" stroke-width="1.2" />
+          <circle cx="18" cy="8" r="2" />
+        </svg>
+        <div style="flex:1;max-width:100px;height:1px" class="divider-line"></div>
+      `;
+    });
+
+    // Update divider colors on mode change (via MutationObserver)
+    function updateDividers() {
+      const isPro = root.classList.contains('pro');
+      const lineColor = isPro ? 'rgba(200,180,130,0.35)' : 'rgba(160,130,80,0.3)';
+      const iconColor = isPro ? 'rgba(200,180,130,0.7)' : 'rgba(160,130,80,0.6)';
+      document.querySelectorAll('.divider-line').forEach(l => l.style.background = lineColor);
+      document.querySelectorAll('.divider-icon *').forEach(el => {
+        el.setAttribute('stroke', iconColor);
+        if (el.tagName === 'circle') el.setAttribute('fill', iconColor);
+      });
+    }
+
+    const observer = new MutationObserver(updateDividers);
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+    updateDividers();
+  </script>
+
+  <style>
+    .ornament * {
+      stroke: rgba(200,180,130,0.7);
+      fill: rgba(200,180,130,0.7);
+      transition: stroke 0.5s, fill 0.5s;
+    }
+    .ornament circle[r="4"] { fill: none !important; }
+    .ornament line { fill: none !important; }
+  </style>
+</BaseLayout>
