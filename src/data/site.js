@@ -98,7 +98,7 @@ export const PROJECTS = [
     title: 'This Website',
     desc: 'Portfolio with professional/personal mode toggle.',
     tag: 'Meta',
-    url: 'https://your-actual-netlify-url.netlify.app',
+    url: 'https://github.com/MuhammMud/portfolio-site',
   },
 ];
 
