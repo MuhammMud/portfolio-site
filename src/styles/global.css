@@ -47,7 +47,7 @@
 .avatar-wrap:hover .avatar-ring { animation-play-state: paused; }
 .avatar-wrap:hover .avatar-inner { transform: scale(1.05); }
 .avatar-inner { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; position: relative; transition: transform 0.35s; }
-.avatar-img { position: absolute; inset: 0; transition: opacity 0.45s; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.avatar-img { position: absolute; inset: 0; transition: opacity 0.45s; width: 100%; height: 100%; object-fit: cover; object-position: center center; }
 .avatar-img.hidden { opacity: 0; }
 .avatar-img.visible { opacity: 1; }
 .profile-name { font-family: 'Newsreader', serif; font-weight: 600; line-height: 1.15; transition: color 0.5s; }
